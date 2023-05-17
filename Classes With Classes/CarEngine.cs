@@ -27,9 +27,15 @@ namespace Classes_With_Classes
             if (IsOn && value)
                 Console.WriteLine("Cannot Turn On Engine\nEngine Is allready On");
             else if (IsOn == true && value == false)
+            {
                 IsOn = false;
+                Console.WriteLine("Engine Is Now Off");
+            }
             else if (IsOn == false && value == true)
+            {
                 IsOn = true;
+                Console.WriteLine("Engine Is Now On");
+            }
             else
                 Console.WriteLine("Cannot Turn Off Engine\nEngine Is allready Off");
         }

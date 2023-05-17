@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml;
 
 namespace Classes_With_Classes
 {
@@ -12,6 +13,12 @@ namespace Classes_With_Classes
         double gasInTank;
         double literGasPer100Km;
         CarEngine engine;
+
+        /// <summary>
+        /// <if> </if>
+        /// </summary>
+        /// <param name="gasTankCapacity"></param>
+        /// <param name="literGasPer100Km"></param>
         public Car(double gasTankCapacity, double literGasPer100Km)
         {
             this.gasTankCapacity = gasTankCapacity;
@@ -59,16 +66,33 @@ namespace Classes_With_Classes
         {
             engine.SetIsOn(false);
         }
-        /// <summary>
-        /// Gets <paramref name="Distance"/> In Kilomiters 
-        /// <code></code>
-        /// </summary>
-        /// <param name="Distance"></param>
-        /// <returns><if><see cref="GetGasInTank"/> > 0</if> </returns>
-        ///             <else>true</else>
-        public bool Drive(int Distance)
+
+        public bool Drive(int distance)
         {
-            
+            if (!GetIsOn())
+            {
+                Console.WriteLine("cant drive with the engine turned off now can you");
+                return false;
+            }
+            if (gasInTank <= 0)
+            {
+                Console.WriteLine("the car wont startup... its out of fuel you should refuel it");
+                return false;
+            }
+            double gasPerKiloMeter = GetLiterGasPer100KM()/100;
+            gasInTank -= distance/gasPerKiloMeter;
+            if (gasInTank == 0)
+                Console.WriteLine("upon arriving you run out of fuel");
+            else if (gasInTank < 0)
+                Console.WriteLine("you ran out of fuel while driving");
+            else
+                Console.WriteLine("you made it with fuel to spare");
+            return true;
+        }
+
+        public int FillGas(int pricePerLiter, double requestedFuelInLiters)
+        {
+            return (int)requestedFuelInLiters * pricePerLiter;
         }
     }
 }
