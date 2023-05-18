@@ -10,7 +10,7 @@ namespace Classes_With_Classes
     {
         Car car;
         string name;
-        int money;
+        double money;
         
         public CarDriver(Car car,string name,int money)
         {
@@ -23,15 +23,15 @@ namespace Classes_With_Classes
         {
             return this.name;
         }
-        public int GetMoney()
+        public double GetMoney()
         {
             return this.money;
         }
-        public Car getCar() 
+        public Car GetCar() 
         {
             return this.car;
         }
-        public double GetGasInTank()
+        public double GetCarGasInTank()
         {
             return this.car.GetGasInTank();
         }
@@ -55,37 +55,42 @@ namespace Classes_With_Classes
         {
             return car.Drive(distanceInKiloMeters);
         }
-        public bool FillGasCar(int literFuelPrice, int requestedFuel)
+        public bool FillCarGas (double literFuelPrice, double requestedFuel)
         {
             if (car.GetIsOn())
             {
-                Console.WriteLine("please turn off the engine before refueling");
+                Console.WriteLine("Turn off the engine before refueling");
                 return false;
             }
             if (car.GetGasInTank() == car.GetGasTankCapacity())
             {
-                Console.WriteLine("The fuel tank is full you cannot fuel your car like this");
+                Console.WriteLine("You cannot fuel your car if the tank is full");
                 return false;
             }
             double requiredGasToFillTank = car.GetGasTankCapacity() - car.GetGasInTank();
-            int cost;
+            double cost;
             if (requestedFuel > car.GetGasTankCapacity() || requestedFuel >= requiredGasToFillTank)
             {
-                cost = car.FillGas(literFuelPrice, requiredGasToFillTank);
+                cost = car.FillGasPrice(literFuelPrice, requiredGasToFillTank);
                 if (money - cost < 0)
                 {
                     Console.WriteLine("you dont have the money to fuel the car");
                     return false;
                 }
                 money -= cost;
+                car.FillGas(requiredGasToFillTank);
+                Console.WriteLine($"after refueling you have {GetCarGasInTank()} liters in your tank\nand {money} dollars left");
                 return true;
             }
-            cost = car.FillGas(literFuelPrice, requestedFuel);
+            cost = car.FillGasPrice(literFuelPrice, requestedFuel);
             if (money - cost < 0)
             {
                 Console.WriteLine("you dont have the money to fuel the car");
                 return false;
             }
+            money -= cost;
+            car.FillGas(requestedFuel);
+            Console.WriteLine($"after refueling you have {GetCarGasInTank()} liters in your tank\nand {money} dollars left");
             return true;
         }
     }

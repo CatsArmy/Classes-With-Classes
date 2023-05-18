@@ -1,7 +1,4 @@
-﻿
-
-
-using Classes_With_Classes;
+﻿using Classes_With_Classes;
 
 static void Bicycle()
 {
@@ -26,5 +23,28 @@ static void Bicycle()
 }
 static void CarDriver()
 {
-
+    double literPrice = 8;
+    CarEngine engine = new CarEngine();
+    Car car = new Car(35, 7);
+    CarDriver carDriver = new CarDriver(car, "yossi", 0);
+    carDriver.TurnOffCar();
+    carDriver.TurnOnCar();
+    carDriver.DriveCar(100);
+    Console.WriteLine(carDriver.GetCarGasInTank());
+    Console.WriteLine(car.GetGasInTank());
+    carDriver.DriveCar(400);
+    carDriver.DriveCar(100);
+    carDriver.TurnOnCar();
+    carDriver.FillCarGas(literPrice, 5);
+    carDriver.AddMoney(200);
+    carDriver.TurnOffCar();
+    carDriver.FillCarGas(literPrice, 21);
+    carDriver.DriveCar(10);
+    carDriver.TurnOnCar();
+    carDriver.DriveCar(250);
+    Console.WriteLine(carDriver.GetCarGasInTank());
+    carDriver.FillCarGas(literPrice, 4);
+    carDriver.TurnOffCar();
+    carDriver.FillCarGas(literPrice, 4);
 }
+CarDriver();

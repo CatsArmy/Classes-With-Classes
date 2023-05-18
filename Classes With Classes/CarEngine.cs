@@ -22,22 +22,29 @@ namespace Classes_With_Classes
         {
             return this.IsOn;
         }
-        public void SetIsOn(bool value)
+        public void SetIsOn()
         {
-            if (IsOn && value)
-                Console.WriteLine("Cannot Turn On Engine\nEngine Is allready On");
-            else if (IsOn == true && value == false)
-            {
-                IsOn = false;
-                Console.WriteLine("Engine Is Now Off");
-            }
-            else if (IsOn == false && value == true)
+            if (!IsOn)
             {
                 IsOn = true;
-                Console.WriteLine("Engine Is Now On");
+                Console.WriteLine("Engine on");
             }
             else
-                Console.WriteLine("Cannot Turn Off Engine\nEngine Is allready Off");
+            {
+                Console.WriteLine("Cannot turn on engine if the engine is allready on");
+            }
+        }
+        public void SetIsOff()
+        {
+            if (IsOn)
+            {
+                IsOn = false;
+                Console.WriteLine("Engine off");
+            }
+            else
+            {
+                Console.WriteLine("Cannot turn off engine if the engine is allready off");
+            }
         }
         /*public void SetIsOn() 
         {

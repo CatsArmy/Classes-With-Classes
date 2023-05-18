@@ -58,13 +58,13 @@ namespace Classes_With_Classes
             }
             else
             {
-                engine.SetIsOn(true);
+                engine.SetIsOn();
 
             }
         }
         public void TurnOffEngine()
         {
-            engine.SetIsOn(false);
+            engine.SetIsOff();
         }
 
         public bool Drive(int distance)
@@ -79,20 +79,34 @@ namespace Classes_With_Classes
                 Console.WriteLine("the car wont startup... its out of fuel you should refuel it");
                 return false;
             }
-            double gasPerKiloMeter = GetLiterGasPer100KM()/100;
-            gasInTank -= distance/gasPerKiloMeter;
+            double gasPerKiloMeter = GetLiterGasPer100KM() / 100;
+            double gasUsed = distance * gasPerKiloMeter;
+            gasInTank -= gasUsed;
             if (gasInTank == 0)
+            {
                 Console.WriteLine("upon arriving you run out of fuel");
-            else if (gasInTank < 0)
+                gasInTank = 0;
+                TurnOffEngine();
+                return true;
+            }
+            if (gasInTank < 0)
+            {
                 Console.WriteLine("you ran out of fuel while driving");
-            else
-                Console.WriteLine("you made it with fuel to spare");
+                gasInTank = 0;
+                TurnOffEngine();
+                return true;
+            }
+            Console.WriteLine("you made it with fuel to spare");
             return true;
         }
-
-        public int FillGas(int pricePerLiter, double requestedFuelInLiters)
+        public double FillGasPrice(double pricePerLiter, double requestedFuelInLiters)
         {
-            return (int)requestedFuelInLiters * pricePerLiter;
+            return requestedFuelInLiters * pricePerLiter;
+        }
+
+        public void FillGas(double requestedFuelInLiters)
+        {
+            gasInTank += requestedFuelInLiters;
         }
     }
 }
